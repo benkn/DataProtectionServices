@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<project name="DataProtectionServices" default="jar" basedir=".">
+	<!-- Load our library directories from the build.properties file -->
+	<property file="build.properties" />
+
+	<!-- variables -->
+	<property name="src" value="${basedir}/src" />
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="dist.dir" value="${basedir}/dist" />
+	<property name="lib.dir" value="${basedir}/lib" />
+	
+    <target name="usage">
+        <echo message=""/>
+        <echo message="${name} build file"/>
+        <echo message="-----------------------------------"/>
+        <echo message=""/>
+        <echo message="Available targets are:"/>
+        <echo message="clean     	 --> Delete build and deploy directories and recreate."/>
+        <echo message="compile    	 --> Compile the java code"/>
+    	<echo message="jar (default) --> Jar the compiled classes."/>
+    	<echo message="docs      	 --> Generate JavaDocs for this project"/>
+        <echo message=""/>
+    </target>
+
+	<path id="classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<target name="clean" description="Delete build and deploy directories and recreate.">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<target name="compile" depends="clean" description="Compile the java code">
+		<echo>...Compiling code...</echo>
+		<javac srcdir="${src}" destdir="${build.dir}" classpathref="classpath" debug="${javac.debug}" nowarn="off" fork="true" encoding="UTF-8">
+		</javac>
+	</target>
+	
+	<target name="jar" depends="compile" description="jar all classes, including external dependencies" >		
+		<tstamp />
+		<delete file="${dist.dir}/${name}-${version}.jar" />
+		<jar destfile="${dist.dir}/${name}-${version}.jar" basedir="${build.dir}" >
+		    <zipgroupfileset dir="${lib.dir}" includes="commons-codec-1.4.jar"/>
+			<manifest>
+				<attribute name="Manifest-Version" value="1.0" />
+				<attribute name="Classpath" value="**/*.jar" />
+				<attribute name="Implementation-Version" value="${DSTAMP}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Build the JavaDocs for this project	   -->
+	<target name="docs" description="Generate JavaDocs for this project">
+		<delete dir="${dist.dir}/docs" />
+		<mkdir dir="${dist.dir}/docs" />
+		<mkdir dir="${dist.dir}/docs/api" />
+		<javadoc classpathref="classpath" destdir="${dist.dir}/docs/api" author="true" version="true" use="true" windowtitle="${name}">
+
+			<!-- Define the package set to include: all source files except unit tests -->
+			<packageset dir="src" defaultexcludes="yes">
+				<include name="**/**" />
+				<exclude name="**/*Test*" />
+			</packageset>
+			<doctitle>
+				<![CDATA[<h1>Data Protection Services</h1>]]>
+			</doctitle>
+		</javadoc>
+	</target>
+</project>
