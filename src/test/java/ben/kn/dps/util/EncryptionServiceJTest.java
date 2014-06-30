@@ -1,6 +1,7 @@
 package ben.kn.dps.util;
 
 import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
 import ben.kn.dps.EncryptionService;

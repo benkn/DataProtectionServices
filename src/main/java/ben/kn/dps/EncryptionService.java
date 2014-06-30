@@ -52,6 +52,7 @@ public class EncryptionService {
 	 */
 	public static String decrypt(String encodedPassword) throws Exception {
 		byte[] encodedText = Base64.decodeBase64(encodedPassword);
+		System.out.println("encodedText length = " + encodedText.length);
 		byte[] result = util.processPassword(encodedText, Cipher.DECRYPT_MODE);
 		return new String(result, UTF8_ENCODING);
 	}
