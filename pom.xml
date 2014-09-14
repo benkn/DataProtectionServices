@@ -25,6 +25,7 @@
 			<artifactId>commons-codec</artifactId>
 			<version>1.8</version>
 		</dependency>
+		
        <!-- testing -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -42,5 +43,5 @@ Use the EncryptionService to encrypt and decrypt passwords or other text.</descr
 		<url>clearthehaze.com</url>
 	</organization>
 	<url>https://github.com/TechTrailblazer/DataProtectionServices</url>
-	<version>0.5</version>
+	<version>0.6</version>
 </project>

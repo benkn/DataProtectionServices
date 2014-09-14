@@ -16,20 +16,20 @@ public class EncryptionServiceJTest {
 		String myKey = "jumpin";
 		for ( int i = 0; i < 8; i++ ) {
 			String encrypted = EncryptionService.encrypt(myKey);
-			System.out.println("Key Length : " + myKey.length() + "\tEncryptedValue = " + encrypted
-					+ "\tLength : " + encrypted.length());
+			System.out.println("Key Length : " + myKey.length() + "\tEncryptedValue = " + encrypted + "\tLength : "
+			        + encrypted.length());
 			assertTrue(encrypted != null);
 
 			myKey += "horse";
 		}
 
 		String encrypted = EncryptionService.encrypt(key);
-		System.out.println("Key Length : " + key.length() + "\tEncryptedValue = " + encrypted
-				+ "\tLength : " + encrypted.length());
+		System.out.println("Key Length : " + key.length() + "\tEncryptedValue = " + encrypted + "\tLength : "
+		        + encrypted.length());
 
 		encrypted = EncryptionService.encrypt("This is a key phrase with 30 characters.");
-		System.out.println("Key Length : " + key.length() + "\tEncryptedValue = " + encrypted
-				+ "\tLength : " + encrypted.length());
+		System.out.println("Key Length : " + key.length() + "\tEncryptedValue = " + encrypted + "\tLength : "
+		        + encrypted.length());
 		assertTrue(encrypted != null);
 	}
 
@@ -64,4 +64,14 @@ public class EncryptionServiceJTest {
 		assertTrue("Re-encryption doesn't match", intermediate.equals(intermediate2));
 	}
 
+	@Test
+	public void testPadded() throws Exception {
+		// maintaining minimum 6 characters, maximum 40 characters
+		String[] keys = { "sixlet", "tenletters", "sixteen lettersXX", "twenty-five letters longXX", key };
+
+		for ( String k : keys ) {
+			String encrypted = EncryptionService.encrypt(null, k, 185);
+			System.out.println("For '" + k + "': " + encrypted.length() + ", " + encrypted);
+		}
+	}
 }
