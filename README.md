@@ -5,6 +5,17 @@ Utilities for encryption, decryption, and other security services.
 
 Use the EncryptionService to encrypt and decrypt passwords or other text.
 
+## Installation
+To begin using, you must clone this repo and run `mvn clean install`. That will add it to your local repository. Then include in your pom:
+
+	<dependency>
+		<groupId>ben.kn</groupId>
+		<artifactId>dps</artifactId>
+		<version>0.6</version>
+	</dependency>
+	
+Alternatively, you can run `mvn clean package`, and handle the jar found in the target directory however you'd please.
+
 ## Usage Examples
 All the methods from the EncryptionService are statically accessible. If you want to encrypt text:
 
